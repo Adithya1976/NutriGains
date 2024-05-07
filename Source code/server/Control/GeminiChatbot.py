@@ -11,7 +11,7 @@ sys.path.append(Entity_dir)
 
 from GAIHandler import GAIHandler
 from MealBrowser import MealBrowser
-class Chatbot:
+class GeminiChatbot:
     def __init__(self, history):
         self.history = history
     def extractFilters(self, message):
@@ -68,19 +68,21 @@ class Chatbot:
     def isRelated(self, message):
         gaiHandler = GAIHandler([])
         context = """
-            This is a user query to a nutrition app that provides meal recommendations to users and other nutrition suggestions via a chatbot. Determine if this user query is relevant to the app or not. Say 1 if yes or 0 if no.
+            This is a user query to a nutrition app that provides meal recommendations to users and other nutrition suggestions via a chatbot. Determine if this user query is relevant to the app's domain or functionality.
+            If it is not relevant, generate an appropriate response in the form of a single string. Otherwise, output 0.
         """
         context += "User query: " + message
         response = gaiHandler.getResponse(context)
-        if response == "1": return True
-        else: return False
-    def mainChatbotLogic(self, message):
+        print(response)
+        return response
+    def generate(self, message):
         gaiHandler = GAIHandler(self.history)
         TextResponse = None
         MealResponse = None
         # find if the query is relevant or not
-        if not self.isRelated(message):
-            TextResponse = "This query is not relavant"
+        unsupportedQueryResponse = self.isRelated(message)
+        if unsupportedQueryResponse != "0":
+            TextResponse = unsupportedQueryResponse
         else:
         # find if the user requires meal suggestions or not
             if self.isMealRecommendationsRequired(message):

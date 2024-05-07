@@ -20,8 +20,9 @@ from OTPHandler import Otp_handler
 from FavouritesController import FavouritesController
 from MealTrackingController import MealTrackingController
 from Meal import Meal
-from Chatbot import Chatbot
+from GeminiChatbot import GeminiChatbot
 from ProfileHandler import ProfileHandler
+from ConvaChatbot import ConvaChatbot
 
 
 app  = Flask(__name__)
@@ -201,10 +202,10 @@ def deleteFromTracking():
 def getChatbotResponse():
     data = request.args.to_dict()
     history = json.loads(data.get("history"))
-    print(history, file = sys.stdout)
     message = data.get("message")
-    chatbot = Chatbot(history)
-    return chatbot.mainChatbotLogic(message)
+    #chatbot = GeminiChatbot(history)
+    chatbot = ConvaChatbot([])
+    return chatbot.generate(message)
 
 #profile handler api routes
 @app.route("/profilehandler/getprofile", methods=['GET'])
