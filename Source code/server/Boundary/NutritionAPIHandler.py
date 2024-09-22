@@ -8,8 +8,10 @@ sys.path.append(Entity_dir)
 
 from Meal import Meal
 
+SPOONACULAR_API_KEY = os.environ.get("SPOONACULAR_API_KEY")
+
 class NutritionAPIHandler:
-    APIKey = "b6a061f149e1487283171ce5de6d2646" 
+    APIKey = SPOONACULAR_API_KEY 
     complexSeach_url = "https://api.spoonacular.com/recipes/complexSearch"
     ingredientSearch_url = "https://api.spoonacular.com/recipes/"
     def GETMeals(self, params):
