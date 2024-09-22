@@ -1,12 +1,13 @@
 import google.generativeai as genai
+import os
 """
 At the command line, only need to run once to install the package via pip:
 $ pip install google-generativeai
 """
-
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 class GAIHandler:
     def __init__(self, history):
-        self.api_key="AIzaSyBK0_-Qq5WzN7SLYq7wYcPWiZNpqpHTDjI"
+        self.api_key=GEMINI_API_KEY
         genai.configure(api_key=self.api_key)
 
         # Set up the model
